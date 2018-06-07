@@ -58,6 +58,7 @@ Sub Globals
 	
 	'Private mapPanel As Panel
 	Private Reset As Button
+	Private Save As Button
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -197,7 +198,7 @@ Sub Save_Click
 	pl.Points = Starter.listLocations
 	pl.Color=Colors.Blue
 	pl.ZIndex=3
-	
+	Save.Enabled = False
 	'If MapFragment1.IsGooglePlayServicesAvailable = False Then
 	'	ToastMessageShow("Google Play services not available.", True)
 '	Else
@@ -205,10 +206,11 @@ Sub Save_Click
 '	End If
 End Sub
 
-Sub Reset_Click
+Sub Reset_LongClick
 	Log("DANS Reset")
 	Starter.Distance = 0
 	Starter.cpt = 0
+	Save.Enabled = True
 	Starter.listLocations.Clear
 	Starter.List1.Clear
 End Sub

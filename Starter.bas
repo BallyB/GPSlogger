@@ -20,7 +20,7 @@ Sub Process_Globals
 	Public LatitudeReal, LongitudeReal As Double
 	Public LatitudeStart, LongitudeEnd As Double
 	Public listLocations As List
-	Public Distance As Int = 0
+	Public Distance As Double = 0
 	Public cpt As Int = 0
 End Sub
 
@@ -61,7 +61,7 @@ Sub GPS_LocationChanged (Location1 As Location)
 	List1.Add(sbb.ToString)
 	cpt = cpt + 1
 	
-	CallSub3(Main, "GPS_LocationChanged", Location1, Distance)
+	CallSub3(Main, "GPS_LocationChanged", Location1, Round(Distance))
 End Sub
 
 Public Sub StartGps
@@ -90,6 +90,7 @@ End Sub
 
 'Return true to allow the OS default exceptions handler to handle the uncaught exception.
 Sub Application_Error (Error As Exception, StackTrace As String) As Boolean
+	Log("DANS STARTER AppliError")
 	Return True
 End Sub
 
