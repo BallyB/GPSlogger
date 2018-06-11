@@ -61,7 +61,7 @@ Sub GPS_LocationChanged (Location1 As Location)
 	List1.Add(sbb.ToString)
 	cpt = cpt + 1
 	
-	CallSub3(Main, "GPS_LocationChanged", Location1, Round(Distance))
+	CallSub3(Main, "GPS_LocationChanged", Location1, Distance)
 End Sub
 
 Public Sub StartGps

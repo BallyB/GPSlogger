@@ -59,6 +59,7 @@ Sub Globals
 	'Private mapPanel As Panel
 	Private Reset As Button
 	Private Save As Button
+'	Private Panel1 As Panel
 End Sub
 
 Sub Activity_Create(FirstTime As Boolean)
@@ -69,28 +70,32 @@ Sub Activity_Create(FirstTime As Boolean)
 	'rp.CheckAndRequest(rp.PERMISSION_READ_EXTERNAL_STORAGE)
 	'rp.CheckAndRequest(rp.PERMISSION_WRITE_EXTERNAL_STORAGE)
 	'rp.CheckAndRequest(rp.PERMISSION_ACCESS_FINE_LOCATION)
-	If FirstTime Then
-		If Starter.gps.GPSEnabled=False Then
-			ToastMessageShow("Please enable your device's GPS capabilities", True)
-			StartActivity(Starter.gps.LocationSettingsIntent)
+	Activity.LoadLayout("VuePrincipale")
+	If MapFragment1.IsGooglePlayServicesAvailable = False Then
+		ToastMessageShow("Google Play services not available.", True)
+	End If
+	'If FirstTime Then
+	'	If Starter.gps.GPSEnabled=False Then
+	'		ToastMessageShow("Please enable your device's GPS capabilities", True)
+	'		StartActivity(Starter.gps.LocationSettingsIntent)
 	'	gps.Initialize("gpsClient")
 			'	userlocation.Initialize
-		Else
+	'	Else
 			'Starter.gps.Start(0, 0)
 		
-			Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_ACCESS_FINE_LOCATION)
-			Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
-			If Result Then CallSubDelayed(Starter, "StartGPS")
+	'		Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_ACCESS_FINE_LOCATION)
+	'		Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
+	'		If Result Then CallSubDelayed(Starter, "StartGPS")
 			'ProgressDialogShow("Waiting for GPS location")
-		End If
-	End If
+	'	End If
+	'End If
 	
 '	Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
 '	If Result Then
 '		gps.Initialize
 '		Log(gps
 '	End If
-	Activity.LoadLayout("VuePrincipale")
+	
 	
 	'List1.Initialize
 	
@@ -102,14 +107,21 @@ Sub SaveStringExample
 End Sub
 
 Sub Activity_Resume
-	Log("DANS Resume (vide)")
+	Log("DANS Resume ")
 	
-		'StartActivity(Starter.GPS1.LocationSettingsIntent) 'Will open the relevant settings screen.
-	
-	'
-	
+	Log("DANS Resume après map")
+	If Starter.gps.GPSEnabled = False Then
+		ToastMessageShow("Please enable the GPS device.", True)
+		'Activity.GetStartingIntent
+		StartActivity(Starter.gps.LocationSettingsIntent) 'Will open the relevant settings screen.
+	Else
 		
-		
+		Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_ACCESS_FINE_LOCATION)
+		Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
+		If Result Then CallSubDelayed(Starter, "StartGPS")
+	End If
+	
+	
 	
 End Sub
 
@@ -129,7 +141,7 @@ Public Sub GpsStatus (Satellites As List)
 End Sub
 
 
-Public Sub GPS_LocationChanged (Location1 As Location,Distance As Int)
+Public Sub GPS_LocationChanged (Location1 As Location,Distance As Double)
 	Log("DANS LocationChanged")
 	Awake.KeepAlive(True)
 	'Dim sbb As StringBuilder
@@ -171,9 +183,15 @@ End Sub
 Sub MapFragment1_Ready
 	Log("DANS Map_ready")
 	gmap = MapFragment1.GetMap
+	'If gmap.IsInitialized = False Then
+	'	ToastMessageShow("Error initializing map.", True)
+	'Else
+		gmap.MyLocationEnabled = True
+	'End If
 	'Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_ACCESS_FINE_LOCATION)
 	'Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
-	gmap.MyLocationEnabled = True
+	
+	
 	'Result
 		'Dim m1 As Marker = gmap.AddMarker(10,30,"test")
 		'm1.Snippet = "This is the snippet"
@@ -190,14 +208,26 @@ Sub Save_Click
 		shared = Starter.rp.GetSafeDirDefaultExternal("test")
 		Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_READ_EXTERNAL_STORAGE)
 		Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_WRITE_EXTERNAL_STORAGE)
-		Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
+		Wait For Activity_PermissionResult(Permission As String, Result As Boolean)
 		If Result Then SaveStringExample
 	End If
 '	MapFragment1.Initialize("Map",Activity)
+	'Panel1.Initialize("")
+'	Wait For MapFragment1_Ready
+	'If gmap.IsInitialized = False Then
+	'	gmap = MapFragment1.GetMap
+	'	gmap.MyLocationEnabled = True
 	Dim pl As Polyline = gmap.AddPolyline
 	pl.Points = Starter.listLocations
 	pl.Color=Colors.Blue
 	pl.ZIndex=3
+	'Else
+	'	Dim pl As Polyline = gmap.AddPolyline
+	'	pl.Points = Starter.listLocations
+	'	pl.Color=Colors.Blue
+	'	pl.ZIndex=3
+	'End If
+	
 	Save.Enabled = False
 	'If MapFragment1.IsGooglePlayServicesAvailable = False Then
 	'	ToastMessageShow("Google Play services not available.", True)
@@ -209,6 +239,7 @@ End Sub
 Sub Reset_LongClick
 	Log("DANS Reset")
 	Starter.Distance = 0
+	Dist.Text = 0
 	Starter.cpt = 0
 	Save.Enabled = True
 	Starter.listLocations.Clear
