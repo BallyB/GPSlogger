@@ -25,7 +25,7 @@ Sub Process_Globals
 End Sub
 
 Sub Service_Create
-	Log("DANS ServiceCreate")
+	Log("DANS STARTER ServiceCreate")
 	'This is the program entry point.
 	'This is a good place to load resources that are not specific to a single activity.
 	gps.Initialize("gps")
@@ -44,24 +44,23 @@ Sub GPS_LocationChanged (Location1 As Location)
 	If cpt == 0 Then
 		StartLocation.Initialize2(LatitudeReal, LongitudeReal)
 	End If
-	'StartLocation.Initialize2
-	'StartLocation.Initialize2(LatitudeReal, LongitudeReal)
+	
 	EndLocation.Initialize2(LatitudeReal, LongitudeReal)
-	'If StartLocation.DistanceTo(EndLocation) < 15  Then
+	
 	Distance = Distance + StartLocation.DistanceTo(EndLocation)
-	'Log(Distance)  'Why not
+	
        	
-	'Reset to start
+	
 	LatitudeStart = LatitudeReal
 	LongitudeEnd = LongitudeReal
 	StartLocation.Initialize2(LatitudeStart, LongitudeEnd)
 	sbb.Initialize
 	sbb.Append("timestamp," & Chr(34) & (Round(DateTime.Now/1000)-631065600) & Chr(34) & ",s,altitude,"&Chr(34)&(Location1.Altitude)&Chr(34)&",m,distance,"&Chr(34) & Distance & Chr(34) & ",m,speed," & Chr(34) & $"$1.2{Location1.Speed}"$ & Chr(34) & ",m/s,position_lat,"& Chr(34) & (Round(Location1.Latitude*11930464.7111)) & Chr(34) & ",position_long,"&Chr(34) & (Round(Location1.Longitude*11930464.7111))&Chr(34))
-	'sbb.Append(CRLF)
+	
 	List1.Add(sbb.ToString)
 	cpt = cpt + 1
 	
-	CallSub3(Main, "GPS_LocationChanged", Location1, Distance)
+	CallSub3(ActivityGPS, "GPS_LocationChanged", Location1, Distance)
 End Sub
 
 Public Sub StartGps
@@ -85,7 +84,7 @@ Sub Service_Start (StartingIntent As Intent)
 End Sub
 Sub GPS_GpsStatus (Satellites As List)
 	Log("DANS STARTER Gps_status")
-	CallSub2(Main, "GpsStatus", Satellites)
+	CallSub2(ActivityGPS, "GpsStatus", Satellites)
 End Sub
 
 'Return true to allow the OS default exceptions handler to handle the uncaught exception.
