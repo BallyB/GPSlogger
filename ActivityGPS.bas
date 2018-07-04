@@ -76,6 +76,8 @@ End Sub
 
 Sub MapFragment1_Ready
 	Log("DANS ACT_GPS Map_ready"&Chr(0xF23C))
+	Starter.rp.CheckAndRequest(Starter.rp.PERMISSION_ACCESS_COARSE_LOCATION)
+	Wait For Activity_PermissionResult (Permission As String, Result As Boolean)
 	gmap = MapFragment1.GetMap
 	'If gmap.IsInitialized = False Then
 	'	ToastMessageShow("Error initializing map.", True)

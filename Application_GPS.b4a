@@ -1,28 +1,36 @@
 ﻿Build1=Default,test.adrien
 File1=bouton_retour.jpg
-File2=vueBLE.bal
-File3=vuegps.bal
-File4=VueHome.bal
+File2=lytMain.bal
+File3=vueBLE.bal
+File4=vuegps.bal
+File5=VueHome.bal
 FileGroup1=Default Group
 FileGroup2=Default Group
 FileGroup3=Default Group
 FileGroup4=Default Group
+FileGroup5=Default Group
 Group=Default Group
 IconFile=
 Library1=core
+Library10=byteconverter
+Library11=bleinsoleemulation
 Library2=runtimepermissions
 Library3=gps
 Library4=phone
 Library5=googlemaps
 Library6=reflection
-ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="23"/>~\n~<uses-feature android:name="android.hardware.location.gps"/>~\n~~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~AddPermission(android.permission.WRITE_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.READ_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.ACCESS_FINE_LOCATION)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~CreateResourceFromFile(Macro, FirebaseAnalytics.GooglePlayBase)~\n~AddApplicationText(<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCxGuZiUo6IgqbuIySKqT_pLyZa7mNN8IU"/>)~\n~'End of default text.~\n~
-Module1=Starter
-Module2=ActivityBLE
+Library7=ble2
+Library8=xui
+Library9=stringutils
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="23"/>~\n~<uses-feature android:name="android.hardware.location.gps"/>~\n~~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~AddPermission(android.permission.WRITE_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.READ_EXTERNAL_STORAGE)~\n~AddPermission(android.permission.ACCESS_FINE_LOCATION)~\n~AddPermission(android.permission.ACCESS_COARSE_LOCATION)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.DarkTheme)~\n~CreateResourceFromFile(Macro, FirebaseAnalytics.GooglePlayBase)~\n~AddApplicationText(<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCxGuZiUo6IgqbuIySKqT_pLyZa7mNN8IU"/>)~\n~'End of default text.~\n~
+Module1=ActivityBLE
+Module2=Starter
 Module3=ActivityGPS
 Module4=ClsActionBar
-NumberOfFiles=4
-NumberOfLibraries=6
-NumberOfModules=4
+Module5=BLEdata
+NumberOfFiles=5
+NumberOfLibraries=11
+NumberOfModules=5
 Version=8
 @EndOfDesignText@
 #Region  Project Attributes 
